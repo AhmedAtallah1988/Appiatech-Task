@@ -49,7 +49,7 @@ namespace Appiatech_Task.Repository
         public async Task Remove(T entity)
         {
             db.Set<T>().Remove(entity);
-            await db.AddRangeAsync();
+            await db.SaveChangesAsync();
         }
         public int Count(Func<T, bool> predicate = null)
         {

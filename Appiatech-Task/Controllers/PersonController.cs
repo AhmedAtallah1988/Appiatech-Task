@@ -63,7 +63,7 @@ namespace Appiatech_Task.Controllers
             var count = _personRepository.Count(x => x.Email.ToLower() == model.Email.ToLower());
             if(count > 0)
             {
-                throw new Exception($"The person {model.Name} already exists.");
+                throw new Exception($"The email {model.Email} already exists.");
             }
             Person person = new Person();
             person.Name = model.Name;
@@ -84,7 +84,7 @@ namespace Appiatech_Task.Controllers
                                                      x.Email.ToLower() == model.Email.ToLower());
             if(count > 0)
             {
-                throw new Exception("Something is exists.");
+                throw new Exception($"The employee {model.Email} is already exists.");
             }
             person.Name = model.Name;
             person.Email = model.Email;
@@ -100,6 +100,10 @@ namespace Appiatech_Task.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Person person = await _personRepository.GetById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
             await _personRepository.Remove(person);
             return NoContent();
         }
